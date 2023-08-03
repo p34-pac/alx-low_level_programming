@@ -5,7 +5,7 @@
  * flip_bits - fip bits to convert one number to another number
  * @n: first number
  * @m: second number to convert to
- * return: number of bits that was needed to flip
+ * Return: number of bits that was needed to flip
  */
 
 unsigned int flip_bits(unsigned long int n, unsigned long int m)
