@@ -1,23 +1,51 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "main.h"
+#include <stddef.h>
 
 /**
- * main - check the code
+ * _strlen - counts string length
+ * @str: string to be used
  *
- * Return: Always 0.
+ * Return: length of the string
  */
-int main(int ac, char **av)
+int _strlen(char *str)
 {
-    int res;
+	int len = 0;
 
-    if (ac != 3)
-    {
-        dprintf(2, "Usage: %s filename text\n", av[0]);
-        exit(1);
-    }
-    res = create_file(av[1], av[2]);
-    printf("-> %i)\n", res);
-    return (0);
+	while (str[len] != '\0')
+		len++;
+	return (len);
 }
 
+/**
+ * append_text_to_file - appends text at the end of a file
+ * @filename: name of the file
+ * @text_content: content to be appended
+ *
+ * Return: 1 on success, -1 otherwise
+ */
+int append_text_to_file(const char *filename, char *text_content)
+{
+	int file, wrote;
+
+	if (filename == NULL)
+		return (-1);
+	file = open(filename, O_WRONLY | O_APPEND);
+	if (file == -1)
+		return (-1);
+	if (text_content != NULL)
+	{
+		wrote = write(file, text_content, _strlen(text_content));
+		if (wrote == -1)
+		{
+			close(file);
+			return (-1);
+		}
+		close(file);
+		return (1);
+	}
+	else
+	{
+		close(file);
+		return (1);
+	}
+}
